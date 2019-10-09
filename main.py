@@ -1,7 +1,7 @@
 import cv2 as cv
 
 if __name__ == '__main__':
-    cap = cv.VideoCapture('data/video2.mkv')
+    cap = cv.VideoCapture('data/video.mkv')
     cars_cascade = cv.CascadeClassifier('haar/cars.xml')
 
     while True:
