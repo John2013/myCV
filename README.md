@@ -18,3 +18,13 @@ The app should recognize objects on a video
     ```bash
     $ conda install --file .\requirements.txt
     ```
+   
+## How to run
+
+1. Put video file to `./data` folder
+2. In `main.py` in string `cap = cv.VideoCapture('data/video.mkv')` change path to your file
+3. Activate environment
+4. run program
+    ```bash
+    $ python main.py
+    ```
