@@ -4,19 +4,31 @@ The app should recognize objects on a video
 
 ## Installation
 
-1. Install **Anaconda** or **Miniconda** for **Python3.7**
-    https://www.anaconda.com/distribution/
+1. Install **python 3.7** and **pip**
 2. Create environment
     ```bash
-    $ conda create --name myEnv 
+    $ python -m venv venv
     ```
 3. Activate environment
+    
+    in PowerShell:
     ```bash
-    $ conda activate myEnv
+    $ ./venv/Scripts/Activate.ps1
     ```
+   
+    in cmd:
+    ```bash
+    $ ./venv/Scripts/activate.bat
+    ```
+   
+    in bash:
+    ```bash
+    $ source ./venv/bin/activate
+    ```
+   
 4. Install requirements
     ```bash
-    $ conda install --file .\requirements.txt
+    $ pip install -r requirements.txt
     ```
    
 ## How to run
