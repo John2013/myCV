@@ -4,12 +4,12 @@ from matplotlib import pyplot as plt
 
 if __name__ == '__main__':
     face_cascade = cv.CascadeClassifier(
-        'data/haarcascade_frontalface_default.xml')
+        'haar/haarcascade_frontalface_default.xml')
     eye_left_cascade = cv.CascadeClassifier(
-        'data/haarcascade_lefteye_2splits.xml')
+        'haar/haarcascade_lefteye_2splits.xml')
     # eye_right_cascade = cv.CascadeClassifier(
-    #     'data/haarcascade_righteye_2splits.xml')
-    img = cv.imread('data/face2.jpg')
+    #     'haar/haarcascade_righteye_2splits.xml')
+    img = cv.imread('data/face.jpg')
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
