@@ -50,7 +50,7 @@ if __name__ == '__main__':
         'learning/peoples/good.dat'
     ]
 
-    esc, g, b, n = 27, 103, 98, 110
+    esc, g, b, n, enter = 27, 103, 98, 110, 13
 
     good_cnt, bad_cnt = 0, 0
 
@@ -68,7 +68,11 @@ if __name__ == '__main__':
         if key == esc:
             break
         elif key == g:
-            pass
+            while True:
+                key2 = cv.waitKey(30) & 0xff
+                if key2 == enter:
+                    break
+
         elif key == b:
             save_bad(frame, bad_cnt, images_paths[0], dat_paths[0])
             bad_cnt += 1
