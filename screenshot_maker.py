@@ -39,6 +39,36 @@ def cancel_bad(count, image_dir_path, dat_path):
         dat_file.writelines(lines)
 
 
+# initialize the list of reference points and boolean indicating
+# whether cropping is being performed or not
+refPt = []
+cropping = False
+global_frame = None
+
+
+def click_and_crop(event, x, y, flags, param):
+    # grab references to the global variables
+    global refPt, cropping
+
+    # if the left mouse button was clicked, record the starting
+    # (x, y) coordinates and indicate that cropping is being
+    # performed
+    if event == cv.EVENT_LBUTTONDOWN:
+        refPt = [(x, y)]
+        cropping = True
+
+    # check to see if the left mouse button was released
+    elif event == cv.EVENT_LBUTTONUP:
+        # record the ending (x, y) coordinates and indicate that
+        # the cropping operation is finished
+        refPt.append((x, y))
+        cropping = False
+
+        # draw a rectangle around the region of interest
+        cv.rectangle(global_frame, refPt[0], refPt[1], (0, 255, 0), 2)
+        cv.imshow("frame", global_frame)
+
+
 if __name__ == '__main__':
     cap = cv.VideoCapture('data/piter2-720p.mp4')
     images_paths = [
@@ -56,6 +86,9 @@ if __name__ == '__main__':
 
     clear_all(images_paths, dat_paths)
 
+    cv.namedWindow("frame")
+    cv.setMouseCallback("frame", click_and_crop)
+
     while True:
         ret, frame = cap.read()
 
@@ -68,6 +101,7 @@ if __name__ == '__main__':
         if key == esc:
             break
         elif key == g:
+            global_frame = frame
             while True:
                 key2 = cv.waitKey(30) & 0xff
                 if key2 == enter:
