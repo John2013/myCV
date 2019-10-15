@@ -1,5 +1,7 @@
+import itertools
 from os import remove, listdir
 from os.path import join
+from typing import List, Tuple
 
 import cv2 as cv
 
@@ -44,6 +46,7 @@ def cancel_bad(count, image_dir_path, dat_path):
 refPt = []
 cropping = False
 global_frame = None
+frame_areas = []
 
 
 def click_and_crop(event, x, y, flags, param):
@@ -66,7 +69,25 @@ def click_and_crop(event, x, y, flags, param):
 
         # draw a rectangle around the region of interest
         cv.rectangle(global_frame, refPt[0], refPt[1], (0, 255, 0), 2)
+        frame_areas.append(refPt)
         cv.imshow("frame", global_frame)
+
+
+def get_coords_list_str(frame_areas: List[List[Tuple[int]]]):
+    list_points = itertools.chain(*itertools.chain(*frame_areas))
+    return " ".join(map(str, list_points))
+
+
+def save_good(frame, areas, count, image_dir_path, dat_path):
+    image_name = f"{count}.jpg"
+    path = join(image_dir_path, image_name)
+
+    cv.imwrite(path, frame)
+
+    with open(dat_path, 'a') as dat_file:
+        path = join("good", image_name)
+        areas_str = get_coords_list_str(areas)
+        dat_file.write(f"{path} {len(areas)} {areas_str}\n")
 
 
 if __name__ == '__main__':
@@ -102,10 +123,18 @@ if __name__ == '__main__':
             break
         elif key == g:
             global_frame = frame
+            frame_areas = []
             while True:
                 key2 = cv.waitKey(30) & 0xff
                 if key2 == enter:
                     break
+            save_good(frame,
+                      frame_areas,
+                      good_cnt,
+                      images_paths[1],
+                      dat_paths[1])
+            good_cnt += 1
+            print('good count:', good_cnt)
 
         elif key == b:
             save_bad(frame, bad_cnt, images_paths[0], dat_paths[0])
