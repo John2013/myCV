@@ -20,6 +20,7 @@ def save_bad(frame, count, image_dir_path, dat_path):
     image_name = f"{count}.jpg"
     path = join(image_dir_path, image_name)
 
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     cv.imwrite(path, frame)
 
     with open(dat_path, 'a') as dat_file:
@@ -82,6 +83,7 @@ def save_good(frame, areas, count, image_dir_path, dat_path):
     image_name = f"{count}.jpg"
     path = join(image_dir_path, image_name)
 
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     cv.imwrite(path, frame)
 
     with open(dat_path, 'a') as dat_file:
