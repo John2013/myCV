@@ -124,7 +124,7 @@ if __name__ == '__main__':
         if key == esc:
             break
         elif key == g:
-            global_frame = frame
+            global_frame = frame.copy()
             frame_areas = []
             while True:
                 key2 = cv.waitKey(30) & 0xff
